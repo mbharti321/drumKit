@@ -1,5 +1,3 @@
-// alert("hello");
-
 // document.querySelector("button").addEventListener("click", clickResponce);
 
 var buttons = document.querySelectorAll(".drum");
@@ -10,24 +8,30 @@ var buttons = document.querySelectorAll(".drum");
 //     alert("I was clicked!!");
 // }
 
+//Button response
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function () {
         var buttonInnerHTML = this.innerHTML;
         playMusic(buttonInnerHTML);
+        //call animation function
+        buttonAnimation(buttonInnerHTML);
     });
 }
 
-
+//Keyboard response
 document.addEventListener("keypress", function (event) {
     // console.log(event.key);
     var pressedKey = event.key;
     playMusic(pressedKey);
+
+    //call animation function
+    buttonAnimation(pressedKey);
 });
 
 
 //function to play music based on key pressed/ or button clicked
-function playMusic(letter) {
-    switch (letter) {
+function playMusic(key) {
+    switch (key) {
         case "w":
             var tom1 = new Audio("sounds/tom-1.mp3");
             tom1.play();
@@ -58,6 +62,18 @@ function playMusic(letter) {
             break;
 
         default:
-            console.log(letter);
+            console.log(key);
     }
+}
+
+// function for animation affect
+function buttonAnimation(key) {
+    var activeButton = document.querySelector("." + key);
+    // add new effect style class
+    activeButton.classList.add("pressed");
+
+    // remove new effect style class after 1 sec
+    setTimeout(function () {
+        activeButton.classList.remove("pressed");
+    }, 100);
 }
